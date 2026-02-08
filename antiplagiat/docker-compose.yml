@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE_NAME: api-gateway
+        PORT: 8080
+    ports:
+      - "9080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8080
+    depends_on:
+      - file-storing
+      - file-analysis
+
+  file-storing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE_NAME: file-storing
+        PORT: 8081
+    ports:
+      - "9081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8081
+
+  file-analysis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE_NAME: file-analysis
+        PORT: 8082
+    ports:
+      - "9082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8082
+      - FILE_STORING_URL=http://file-storing:8081
+    depends_on:
+      - file-storing

@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "8d1f5ef9-4b81-4fca-93a7-8f277ad515ae",
+		"name": "Antiplagiat",
+		"description": "Система для проверки загруженных работ на плагиат",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50756411",
+		"_collection_link": "https://vitalia12007-8806005.postman.co/workspace/f976e92d-743c-418e-8a48-9f30c60d62e1/collection/50756411-8d1f5ef9-4b81-4fca-93a7-8f277ad515ae?action=share&source=collection_link&creator=50756411"
+	},
+	"item": [
+		{
+			"name": "Health Checks",
+			"item": [
+				{
+					"name": "API Gateway Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"health"
+							]
+						},
+						"description": "Проверка работы сервиса-посредника, который обрабатывает ошибки и выводит состояние всех микросервисов"
+					},
+					"response": []
+				},
+				{
+					"name": "File Storing Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9081/api/files/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9081",
+							"path": [
+								"api",
+								"files",
+								"health"
+							]
+						},
+						"description": "Проверка работы микросервиса, который отвечает за хранение файлов"
+					},
+					"response": []
+				},
+				{
+					"name": "File Analysis Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9082/api/analysis/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9082",
+							"path": [
+								"api",
+								"analysis",
+								"health"
+							]
+						},
+						"description": "Проверка работы микросервиса, который отвечает за анализ файлов на плагиат"
+					},
+					"response": []
+				}
+			],
+			"description": "Проверка работы микросервисов"
+		},
+		{
+			"name": "File Storing Service",
+			"item": [
+				{
+					"name": "Upload Files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Иван",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Иванов",
+									"type": "text"
+								},
+								{
+									"key": "taskId",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/vitaliaprokhorova/IdeaProjects/antiplagiat/test4.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9081/api/files/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9081",
+							"path": [
+								"api",
+								"files",
+								"upload"
+							]
+						},
+						"description": "Проверяем загрузку файлов в базу"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9081/api/files/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9081",
+							"path": [
+								"api",
+								"files",
+								"all"
+							]
+						},
+						"description": "Смотрим все загруженные файлы"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Files by Task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9081/api/files/task/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9081",
+							"path": [
+								"api",
+								"files",
+								"task",
+								"3"
+							]
+						},
+						"description": "Можем отфильтровать по id задания"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File Analysis Service",
+			"item": [
+				{
+					"name": "Analyze File",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9082/api/analysis/analyze/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9082",
+							"path": [
+								"api",
+								"analysis",
+								"analyze",
+								"1"
+							]
+						},
+						"description": "Проверяем на плагиат конкретную работу, сравнивая с предыдушими по определенному id задания"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9082/api/analysis/reports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9082",
+							"path": [
+								"api",
+								"analysis",
+								"reports"
+							]
+						},
+						"description": "Получаем отчет по конкретному файлу"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task Reports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9082/api/analysis/reports/task/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9082",
+							"path": [
+								"api",
+								"analysis",
+								"reports",
+								"task",
+								"4"
+							]
+						},
+						"description": "Получаем отчет по конкретному заданию: есть плагиат или нет, все - кто сдали работу и где выявлен плагиат"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "Upload via Gateway",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Иван",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Иванов",
+									"type": "text"
+								},
+								{
+									"key": "taskId",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/vitaliaprokhorova/IdeaProjects/antiplagiat/test1.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9080/api/files",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"files"
+							]
+						},
+						"description": "Проверяем связь с микросервисам, который отвечаеть за хранение файлов"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Report via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9080/api/files/1/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9080",
+							"path": [
+								"api",
+								"files",
+								"1",
+								"report"
+							]
+						},
+						"description": "Проверяем связь с микросервисом, который анализирует и предоставляет отчет"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

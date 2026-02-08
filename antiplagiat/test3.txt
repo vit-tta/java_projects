@@ -1,0 +1,12 @@
+# Задача: Вычислить сумму всех чисел от 1 до N
+def calculate_sum(n):
+    result = 0
+    for number in range(1, n + 1):
+        result = result + number
+    return result
+
+# Главная часть программы
+if __name__ == "__main__":
+    user_input = int(input("Пожалуйста, введите N: "))
+    answer = calculate_sum(user_input)
+    print(f"Сумма чисел от 1 до {user_input} составляет {answer}")
