@@ -1,0 +1,3 @@
+amount,bankAccountId,categoryId,date,description,id,type
+2,1,1,2025-11-04,ыв,1,INCOME
+1,1,1,2025-11-04,зп,2,INCOME
